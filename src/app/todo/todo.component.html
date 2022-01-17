@@ -5,10 +5,23 @@
                 {{getName()}}' todo list
             </h3>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" #txtItem 
-                    (keyup.enter)="addItem(txtItem.value);txtItem.value=''"
+                <input type="text" class="form-control" #txtItem [(ngModel)]="inputText"
+                    (keyup.enter)="addItem()"
                 >
-                <button class="btn btn-outline-primary" (click)="addItem(txtItem.value);txtItem.value=''">Add</button>
+                <!-- <button 
+                  class="btn" 
+                  (click)="addItem()"
+                  [class]="{
+                      'disabled' : inputText.length==0,
+                      'btn-secondary' : inputText.length==0,
+                      'btn-primary' : inputText.length > 0  class ı böyle verebildiğimiz gibi bir metod ile de verebiliriz
+                  }" 
+                  >Add</button> -->
+                  <button
+                  class="btn" 
+                  (click)="addItem()"
+                  [class]="getBtnClasses()"
+                  >Add</button>
             </div>
             <div class="from-check mb-3">
                 <input type="checkbox" [(ngModel)]="displayAll" class="form-check-input" id="displayAll">
@@ -37,7 +50,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr  *ngFor="let item of getItems(); let i = index">
+                        <tr  *ngFor="let item of getItems(); let i = index" [class]="{'bg-success' : item.action, 'bg-warning' : !item.action}"
+                        >
                             <td>{{i+1}}</td>
                             <td>{{item.description}}</td>
                             <td>

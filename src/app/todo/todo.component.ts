@@ -18,9 +18,11 @@ export class TodoComponent  {
     return !x
   }
 
-  addItem(value:string){
-    if(value){ 
-      this.model.items.push( {description:value,action: false})
+  inputText:string = ""
+  addItem(){
+    if(this.inputText!=""){ 
+      this.model.items.push( {description:this.inputText,action: false});
+      this.inputText = ""
     }else{
       alert("Bilgi giriniz!!!")
     }
@@ -42,4 +44,11 @@ export class TodoComponent  {
    return this.model.items.filter(item=>item.action).length
  }
 
+ getBtnClasses(){
+  return {
+    'disabled' : this.inputText.length==0,
+  'btn-secondary' : this.inputText.length==0,
+  'btn-primary' : this.inputText.length > 0
+  }
+ }
 }
