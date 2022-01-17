@@ -9,16 +9,18 @@ import { Model } from '../model';
 export class TodoComponent  {
 
   constructor() { }
- message = ""
+  
   model = new Model()
 
-  // addItem(txtItem:any){
-  //   console.log(txtItem.value)
-  // }
+  displayAll:boolean = false
+
+  toggleAction(x:boolean){
+    return !x
+  }
 
   addItem(value:string){
     if(value){ 
-      this.model.items.push( {description:value,action: "no"})
+      this.model.items.push( {description:value,action: false})
     }else{
       alert("Bilgi giriniz!!!")
     }
@@ -30,7 +32,14 @@ export class TodoComponent  {
  }
 
  getItems(){
-   return this.model.items
+   if(this.displayAll){
+     return this.model.items
+   }
+   return this.model.items.filter(item=>!item.action)
+ }
+
+ displayCount(){
+   return this.model.items.filter(item=>item.action).length
  }
 
 }
